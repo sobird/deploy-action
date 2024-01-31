@@ -28471,74 +28471,103 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 1713:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+/***/ 399:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
-const core = __nccwpck_require__(2186)
-const github = __nccwpck_require__(5438)
-const { wait } = __nccwpck_require__(1312)
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.run = void 0;
+const core_1 = __importDefault(__nccwpck_require__(2186));
+const github_1 = __importDefault(__nccwpck_require__(5438));
+const wait_1 = __nccwpck_require__(5259);
 /**
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
  */
-async function run() {
-  try {
-    // The `who-to-greet` input is defined in action metadata file
-    const whoToGreet = core.getInput('who-to-greet', { required: true })
-    core.info(`Hello, ${whoToGreet}!`)
-
-    // The `milliseconds` input is defined in action metadata file
-    const ms = core.getInput('milliseconds', { required: true })
-
-    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Waiting ${ms} milliseconds ...`)
-
-    // Log the current timestamp, wait, then log the new timestamp
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
-
-    // Get the current time and set as an output
-    const time = new Date().toTimeString()
-    core.setOutput('time', time)
-
-    // Output the payload for debugging
-    core.info(
-      `The event payload: ${JSON.stringify(github.context.payload, null, 2)}`
-    )
-  } catch (error) {
-    // Fail the workflow step if an error occurs
-    core.setFailed(error.message)
-  }
+// eslint-disable-next-line import/prefer-default-export
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            // The `who-to-greet` input is defined in action metadata file
+            const whoToGreet = core_1.default.getInput('who-to-greet', { required: true });
+            core_1.default.info(`Hello, ${whoToGreet}!`);
+            // The `milliseconds` input is defined in action metadata file
+            const ms = core_1.default.getInput('milliseconds', { required: true });
+            // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
+            core_1.default.debug(`Waiting ${ms} milliseconds ...`);
+            // Log the current timestamp, wait, then log the new timestamp
+            core_1.default.debug(new Date().toTimeString());
+            yield (0, wait_1.wait)(parseInt(ms, 10));
+            core_1.default.debug(new Date().toTimeString());
+            // Get the current time and set as an output
+            const time = new Date().toTimeString();
+            core_1.default.setOutput('time', time);
+            // const host = core.getInput('host')
+            // const port = core.getInput('port')
+            // const username = core.getInput('username')
+            // const password = core.getInput('password')
+            // const source = core.getInput('source')
+            // const target = core.getInput('target')
+            // Output the payload for debugging
+            core_1.default.info(`The event payload: ${JSON.stringify(github_1.default.context.payload, null, 2)}`);
+        }
+        catch (error) {
+            // Fail the workflow step if an error occurs
+            core_1.default.setFailed(error.message);
+        }
+    });
 }
-
-module.exports = {
-  run
-}
+exports.run = run;
 
 
 /***/ }),
 
-/***/ 1312:
-/***/ ((module) => {
+/***/ 5259:
+/***/ (function(__unused_webpack_module, exports) {
 
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.wait = void 0;
 /**
  * Wait for a number of milliseconds.
  *
  * @param {number} milliseconds The number of milliseconds to wait.
  * @returns {Promise<string>} Resolves with 'done!' after the wait is over.
  */
-async function wait(milliseconds) {
-  return new Promise(resolve => {
-    if (isNaN(milliseconds)) {
-      throw new Error('milliseconds not a number')
-    }
-
-    setTimeout(() => resolve('done!'), milliseconds)
-  })
+function wait(milliseconds) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve) => {
+            if (isNaN(milliseconds)) {
+                throw new Error('milliseconds not a number');
+            }
+            setTimeout(() => { return resolve('done!'); }, milliseconds);
+        });
+    });
 }
-
-module.exports = { wait }
+exports.wait = wait;
 
 
 /***/ }),
@@ -30425,14 +30454,17 @@ module.exports = parseParams
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
+"use strict";
+var exports = __webpack_exports__;
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 /**
  * The entrypoint for the action.
  */
-const { run } = __nccwpck_require__(1713)
-
-run()
+const main_1 = __nccwpck_require__(399);
+(0, main_1.run)();
 
 })();
 
