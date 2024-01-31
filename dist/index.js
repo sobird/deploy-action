@@ -28493,11 +28493,6 @@ exports.run = void 0;
 const core_1 = __importDefault(__nccwpck_require__(2186));
 const github_1 = __importDefault(__nccwpck_require__(5438));
 const wait_1 = __nccwpck_require__(5259);
-/**
- * The main function for the action.
- * @returns {Promise<void>} Resolves when the action is complete.
- */
-// eslint-disable-next-line import/prefer-default-export
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -28560,7 +28555,7 @@ exports.wait = void 0;
 function wait(milliseconds) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve) => {
-            if (isNaN(milliseconds)) {
+            if (Number.isNaN(milliseconds)) {
                 throw new Error('milliseconds not a number');
             }
             setTimeout(() => { return resolve('done!'); }, milliseconds);

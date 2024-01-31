@@ -1,11 +1,7 @@
-import core from '@actions/core';
-import github from '@actions/github';
+import * as core from '@actions/core';
+import * as github from '@actions/github';
 import { wait } from './wait';
-/**
- * The main function for the action.
- * @returns {Promise<void>} Resolves when the action is complete.
- */
-// eslint-disable-next-line import/prefer-default-export
+
 export async function run() {
   try {
     // The `who-to-greet` input is defined in action metadata file

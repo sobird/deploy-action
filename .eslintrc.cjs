@@ -1,10 +1,15 @@
 module.exports = {
   root: true,
+  plugins: [
+    'jest',
+  ],
   extends: [
     'sobird/typescript.cjs',
+    'plugin:jest/recommended',
   ],
   parserOptions: {
     project: './tsconfig.eslint.json',
+
   },
   // overrides: [
   //   {
@@ -36,6 +41,6 @@ module.exports = {
   //   },
   // ],
   rules: {
-
+    'import/prefer-default-export': ['off'],
   },
 };
