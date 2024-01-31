@@ -72,5 +72,4 @@ For example workflow runs, check out the
 | ------ | ----------------------- |
 | `time` | The time we greeted you |
 
-
-* [使用 GitHub CodeQL 进行代码扫描](https://learn.microsoft.com/zh-cn/training/modules/code-scanning-with-github-codeql/)
+- [使用 GitHub CodeQL 进行代码扫描](https://learn.microsoft.com/zh-cn/training/modules/code-scanning-with-github-codeql/)
