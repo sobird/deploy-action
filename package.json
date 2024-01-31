@@ -30,6 +30,7 @@
     "package": "ncc -m build src/index.ts --license licenses.txt",
     "package:watch": "npm run package -- --watch",
     "test": "(jest && make-coverage-badge --output-path ./badges/coverage.svg) || make-coverage-badge --output-path ./badges/coverage.svg",
+    "test:action": "act -j test-action -W .github/workflows/ci.yml --pull=false",
     "all": "npm run lint && npm run test && npm run package"
   },
   "license": "MIT",

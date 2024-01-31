@@ -25,7 +25,8 @@ inputs:
     required: true
   password:
     description: ssh password
-    required: true
+  privateKey:
+    description: private key
   source:
     description: scp file list
     required: true

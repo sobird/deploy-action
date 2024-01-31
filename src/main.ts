@@ -25,12 +25,13 @@ export async function run() {
     const time = new Date().toTimeString();
     core.setOutput('time', time);
 
-    // const host = core.getInput('host')
-    // const port = core.getInput('port')
-    // const username = core.getInput('username')
-    // const password = core.getInput('password')
-    // const source = core.getInput('source')
-    // const target = core.getInput('target')
+    const host = core.getInput('host');
+    const port = parseInt(core.getInput('port'), 10);
+    const username = core.getInput('username');
+    const password = core.getInput('password');
+    const privateKey = core.getInput('privateKey');
+    const source = core.getInput('source');
+    const target = core.getInput('target');
 
     const conn = new Client();
     conn.on('ready', () => {
@@ -47,10 +48,11 @@ export async function run() {
         });
       });
     }).connect({
-      host: '192.168.100.100',
-      port: 22,
-      username: 'frylock',
-      privateKey: readFileSync('/path/to/my/key'),
+      host,
+      port,
+      username,
+      password,
+      privateKey,
     });
 
     // Output the payload for debugging
