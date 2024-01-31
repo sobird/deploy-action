@@ -57,6 +57,10 @@ jobs:
         with:
           who-to-greet: sobird
           milliseconds: 1000
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+
         env:
           ACTIONS_STEP_DEBUG: true
 

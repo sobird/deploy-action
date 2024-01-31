@@ -30,18 +30,18 @@ export async function run() {
     const username = core.getInput('username');
     const password = core.getInput('password');
     const privateKey = core.getInput('privateKey');
-    const source = core.getInput('source');
-    const target = core.getInput('target');
+    // const source = core.getInput('source');
+    // const target = core.getInput('target');
 
     const conn = new Client();
     conn.on('ready', () => {
       console.log('Client :: ready');
       conn.exec('uptime', (err, stream) => {
         if (err) throw err;
-        stream.on('close', (code, signal) => {
+        stream.on('close', (code: any, signal: any) => {
           console.log(`Stream :: close :: code: ${code}, signal: ${signal}`);
           conn.end();
-        }).on('data', (data) => {
+        }).on('data', (data: any) => {
           console.log(`STDOUT: ${data}`);
         }).stderr.on('data', (data) => {
           console.log(`STDERR: ${data}`);
@@ -52,7 +52,6 @@ export async function run() {
       port,
       username,
       password,
-      privateKey,
     });
 
     // Output the payload for debugging
