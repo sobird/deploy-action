@@ -1,7 +1,9 @@
-name: Hello, World!
-description: Greet someone and record the time
-author: GitHub Actions
-
+name: Deploy Action
+description: Sobird's Deploy Action
+author: sobird
+branding:
+  icon: 'crosshair' # 使用的是Feather的图标
+  color: 'gray-dark' # 图标颜色
 # Define your inputs here.
 inputs:
   who-to-greet:
@@ -12,6 +14,24 @@ inputs:
     description: Your input description here
     required: true
     defalut: 1000
+  host:
+    description: remote host
+    required: true
+  port:
+    description: remote host port
+    default: 22
+  username:
+    description: ssh username
+    required: true
+  password:
+    description: ssh password
+    required: true
+  source:
+    description: scp file list
+    required: true
+  target:
+    description: target path on the remote server
+    required: true
 
 # Define your outputs here.
 outputs:

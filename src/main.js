@@ -26,6 +26,13 @@ async function run() {
     const time = new Date().toTimeString()
     core.setOutput('time', time)
 
+    // const host = core.getInput('host')
+    // const port = core.getInput('port')
+    // const username = core.getInput('username')
+    // const password = core.getInput('password')
+    // const source = core.getInput('source')
+    // const target = core.getInput('target')
+
     // Output the payload for debugging
     core.info(
       `The event payload: ${JSON.stringify(github.context.payload, null, 2)}`
