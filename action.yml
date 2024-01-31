@@ -8,6 +8,10 @@ inputs:
     description: Who to greet
     required: true
     default: World
+  milliseconds:
+    description: Your input description here
+    required: true
+    defalut: 1000
 
 # Define your outputs here.
 outputs:
