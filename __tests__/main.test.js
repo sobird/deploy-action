@@ -6,6 +6,7 @@ const github = require('@actions/github')
 const main = require('../src/main')
 
 // Mock the GitHub Actions core library
+const debugMock = jest.spyOn(core, 'debug').mockImplementation()
 const infoMock = jest.spyOn(core, 'info').mockImplementation()
 const getInputMock = jest.spyOn(core, 'getInput').mockImplementation()
 const setFailedMock = jest.spyOn(core, 'setFailed').mockImplementation()
@@ -32,6 +33,14 @@ describe('action', () => {
           return ''
       }
     })
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'milliseconds':
+          return '500'
+        default:
+          return ''
+      }
+    })
 
     // Mock the action's payload
     github.context.payload = {}
@@ -39,7 +48,18 @@ describe('action', () => {
     await main.run()
 
     expect(runMock).toHaveReturned()
-    expect(setOutputMock).toHaveBeenCalledWith('time', expect.any(String))
+
+    // Verify that all of the core library functions were called correctly
+    expect(debugMock).toHaveBeenNthCalledWith(1, 'Waiting 500 milliseconds ...')
+    expect(debugMock).toHaveBeenNthCalledWith(
+      2,
+      expect.stringMatching(timeRegex)
+    )
+    expect(debugMock).toHaveBeenNthCalledWith(
+      3,
+      expect.stringMatching(timeRegex)
+    )
+    expect(setOutputMock).toHaveBeenNthCalledWith(1, 'time', expect.any(String))
   })
 
   it('logs the event payload', async () => {
@@ -48,6 +68,14 @@ describe('action', () => {
       switch (name) {
         case 'who-to-greet':
           return 'World'
+        default:
+          return ''
+      }
+    })
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'milliseconds':
+          return '500'
         default:
           return ''
       }
@@ -76,6 +104,14 @@ describe('action', () => {
           return ''
       }
     })
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'milliseconds':
+          return 'this is not a number'
+        default:
+          return ''
+      }
+    })
 
     // Mock the action's payload
     github.context.payload = {
@@ -85,6 +121,38 @@ describe('action', () => {
     await main.run()
 
     expect(runMock).toHaveReturned()
-    expect(setFailedMock).toHaveBeenCalledWith('Something went wrong...')
+    expect(setFailedMock).toHaveBeenNthCalledWith(
+      1,
+      'milliseconds not a number'
+    )
+  })
+
+  it('fails if no input is provided', async () => {
+    // Set the action's inputs as return values from core.getInput()
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'who-to-greet':
+          throw new Error('Something went wrong...')
+        default:
+          return ''
+      }
+    })
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'milliseconds':
+          throw new Error('Input required and not supplied: milliseconds')
+        default:
+          return ''
+      }
+    })
+
+    await main.run()
+    expect(runMock).toHaveReturned()
+
+    // Verify that all of the core library functions were called correctly
+    expect(setFailedMock).toHaveBeenNthCalledWith(
+      1,
+      'Input required and not supplied: milliseconds'
+    )
   })
 })
