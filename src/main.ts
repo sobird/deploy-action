@@ -1,5 +1,7 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Client } from 'ssh2';
 import { wait } from './wait';
 
 export async function run() {
@@ -29,6 +31,27 @@ export async function run() {
     // const password = core.getInput('password')
     // const source = core.getInput('source')
     // const target = core.getInput('target')
+
+    const conn = new Client();
+    conn.on('ready', () => {
+      console.log('Client :: ready');
+      conn.exec('uptime', (err, stream) => {
+        if (err) throw err;
+        stream.on('close', (code, signal) => {
+          console.log(`Stream :: close :: code: ${code}, signal: ${signal}`);
+          conn.end();
+        }).on('data', (data) => {
+          console.log(`STDOUT: ${data}`);
+        }).stderr.on('data', (data) => {
+          console.log(`STDERR: ${data}`);
+        });
+      });
+    }).connect({
+      host: '192.168.100.100',
+      port: 22,
+      username: 'frylock',
+      privateKey: readFileSync('/path/to/my/key'),
+    });
 
     // Output the payload for debugging
     core.info(
