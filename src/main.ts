@@ -2,6 +2,7 @@ import * as core from '@actions/core';
 import * as github from '@actions/github';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Client } from 'ssh2';
+import fs from 'fs';
 import { wait } from './wait';
 
 export async function run() {
@@ -33,6 +34,9 @@ export async function run() {
     // const source = core.getInput('source');
     // const target = core.getInput('target');
 
+    core.info(`privateKey: ${privateKey}`);
+    console.log('privateKey', privateKey);
+
     const conn = new Client();
     conn.on('ready', () => {
       console.log('Client :: ready');
@@ -51,7 +55,8 @@ export async function run() {
       host,
       port,
       username,
-      password,
+      privateKey: fs.readFileSync('/Users/sobird/.ssh/id_rsa'),
+      debug: (s) => { console.log(s); },
     });
 
     // Output the payload for debugging

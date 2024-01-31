@@ -60,6 +60,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
+          privateKey: ${{ secrets.privateKey }}
 
         env:
           ACTIONS_STEP_DEBUG: true

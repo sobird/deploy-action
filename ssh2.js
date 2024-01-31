@@ -53,3 +53,5 @@ conn.on('ready', () => {
   privateKey: fs.readFileSync('/Users/sobird/.ssh/id_rsa'),
   debug: (s) => {console.log(s)}
 });
+
+console.log('121212', fs.readFileSync('/Users/sobird/.ssh/id_rsa').toString())
