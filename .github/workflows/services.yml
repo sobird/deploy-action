@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Print ports
-        run: echo "${{toJson(job.services)}}"
+        run: echo "${{toJSON(job)}}"
       - name: Ping Nginx Server
         run: |
           apt-get -qq update && apt-get -yqq install --no-install-recommends curl net-tools
