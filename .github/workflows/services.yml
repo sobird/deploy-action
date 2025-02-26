@@ -1,0 +1,32 @@
+name: Test Services
+run-name: Job for Test By ${{ github.actor }}
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test-services:
+    runs-on: ubuntu-latest
+
+    services:
+      nginx:
+        image: nginx
+        # Map port 8080 on the Docker host to port 80 on the nginx container
+        ports:
+          - 8080:80
+      redis:
+        image: redis
+        # Map TCP port 6379 on Docker host to a random free port on the Redis container
+        ports:
+          - 6379/tcp
+
+    steps:
+      - name: Print ports
+        run: echo "${{toJson(job.services)}}"
+      - name: Ping Nginx Server
+        run: |
+          apt-get -qq update && apt-get -yqq install --no-install-recommends curl net-tools
+          netstat -tlpen
+          curl -v http://nginx
